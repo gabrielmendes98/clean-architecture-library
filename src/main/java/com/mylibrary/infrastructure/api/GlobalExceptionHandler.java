@@ -1,4 +1,4 @@
-package com.mylibrary.infrastructure;
+package com.mylibrary.infrastructure.api;
 
 import com.mylibrary.domain.exceptions.DomainException;
 import com.mylibrary.domain.exceptions.NotFoundException;
