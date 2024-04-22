@@ -13,7 +13,7 @@ import java.time.Instant;
 @Table(name = "author")
 public class AuthorJpaEntity {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, length = 32)
     private String id;
 
     @Column(name = "created_at", nullable = false)
