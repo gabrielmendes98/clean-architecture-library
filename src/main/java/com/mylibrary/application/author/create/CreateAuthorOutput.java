@@ -11,7 +11,7 @@ public record CreateAuthorOutput(
 ) {
     public static CreateAuthorOutput from(final Author author) {
         return new CreateAuthorOutput(
-                author.getId().toString(),
+                author.getId().getValue(),
                 author.getName(),
                 author.getCreatedAt()
         );
