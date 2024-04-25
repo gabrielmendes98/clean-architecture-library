@@ -43,5 +43,6 @@ public class PasswordValidator extends Validator {
             }
         }
         this.validationHandler().append(new Error("'password' should has at least one uppercase letter, one lowercase letter, one digit, and one special character"));
+        Arrays.fill(plainPassword, ' ');
     }
 }
