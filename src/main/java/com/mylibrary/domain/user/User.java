@@ -25,8 +25,39 @@ public class User extends Entity<UserID> {
         this.createdAt = createdAt;
     }
 
+    public static User create(PersonName name, String document, Password password, UserRole role) {
+        final var id = UserID.unique();
+        final var createdAt = Instant.now();
+        return new User(id, name, document, password, role, createdAt);
+    }
+
+
+    public static User with(UserID id, PersonName name, String document, Password password, UserRole role, Instant createdAt) {
+        return new User(id, name, document, password, role, createdAt);
+    }
+
     @Override
     public void validate(ValidationHandler handler) {
 
+    }
+
+    public PersonName getName() {
+        return name;
+    }
+
+    public String getDocument() {
+        return document;
+    }
+
+    public Password getPassword() {
+        return password;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 }
