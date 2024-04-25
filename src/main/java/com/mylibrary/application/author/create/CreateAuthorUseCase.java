@@ -22,7 +22,7 @@ public class CreateAuthorUseCase extends UseCase<CreateAuthorInput, Either<Notif
     @Override
     public Either<Notification, CreateAuthorOutput> execute(CreateAuthorInput input) {
         final var notification = Notification.create();
-        final var author = Author.create(PersonName.of(input.name()));
+        final var author = Author.create(PersonName.from(input.name()));
         author.validate(notification);
         return notification.hasError() ? Left(notification) :
                 Try(() -> this.authorGateway.create(author))

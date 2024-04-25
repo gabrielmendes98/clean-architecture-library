@@ -12,10 +12,6 @@ public class PersonName extends ValueObject {
         this.value = value;
     }
 
-    public static PersonName of(final String value) {
-        return new PersonName(value);
-    }
-
     public static PersonName from(final String name) {
         return new PersonName(name);
     }
