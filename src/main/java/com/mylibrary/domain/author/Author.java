@@ -2,31 +2,29 @@ package com.mylibrary.domain.author;
 
 import com.mylibrary.domain.Entity;
 import com.mylibrary.domain.validation.ValidationHandler;
+import com.mylibrary.domain.valueobjects.PersonName;
 
 import java.time.Instant;
 import java.util.Objects;
 
-/**
- * DTO for {@link com.mylibrary.infrastructure.author.persistence.AuthorJpaEntity}
- */
 public class Author extends Entity<AuthorID> {
     private final Instant createdAt;
-    private String name;
+    private PersonName name;
 
-    private Author(AuthorID id, String name, Instant createdAt) {
+    private Author(AuthorID id, PersonName name, Instant createdAt) {
         super(id);
         this.name = name;
         this.createdAt = Objects.requireNonNull(createdAt, "'createdAt' should not be null");
 
     }
 
-    public static Author create(String name) {
+    public static Author create(PersonName name) {
         final var id = AuthorID.unique();
         final var createdAt = Instant.now();
         return new Author(id, name, createdAt);
     }
 
-    public static Author with(AuthorID id, String name, Instant createdAt) {
+    public static Author with(AuthorID id, PersonName name, Instant createdAt) {
         return new Author(id, name, createdAt);
     }
 
@@ -35,11 +33,11 @@ public class Author extends Entity<AuthorID> {
         return id;
     }
 
-    public String getName() {
+    public PersonName getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(PersonName name) {
         this.name = name;
     }
 

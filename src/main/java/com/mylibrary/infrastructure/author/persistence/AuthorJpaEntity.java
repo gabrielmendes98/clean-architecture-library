@@ -2,6 +2,7 @@ package com.mylibrary.infrastructure.author.persistence;
 
 import com.mylibrary.domain.author.Author;
 import com.mylibrary.domain.author.AuthorID;
+import com.mylibrary.domain.valueobjects.PersonName;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -34,7 +35,7 @@ public class AuthorJpaEntity {
     public static AuthorJpaEntity from(final Author author) {
         return new AuthorJpaEntity(
                 author.getId().getValue(),
-                author.getName(),
+                author.getName().getValue(),
                 author.getCreatedAt()
         );
     }
@@ -42,7 +43,7 @@ public class AuthorJpaEntity {
     public Author toAuthor() {
         return Author.with(
                 AuthorID.from(getId()),
-                getName(),
+                PersonName.from(getName()),
                 getCreatedAt()
         );
     }

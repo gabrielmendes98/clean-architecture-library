@@ -1,8 +1,8 @@
 package com.mylibrary.domain.exceptions;
 
 import com.mylibrary.domain.Entity;
-import com.mylibrary.domain.Identifier;
 import com.mylibrary.domain.validation.Error;
+import com.mylibrary.domain.valueobjects.Identifier;
 
 import java.util.Collections;
 import java.util.List;

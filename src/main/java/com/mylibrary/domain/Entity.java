@@ -1,6 +1,7 @@
 package com.mylibrary.domain;
 
 import com.mylibrary.domain.validation.ValidationHandler;
+import com.mylibrary.domain.valueobjects.Identifier;
 
 import java.util.Objects;
 
