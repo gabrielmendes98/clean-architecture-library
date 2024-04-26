@@ -30,13 +30,13 @@ public class Book extends Entity<BookID> {
         this.authorID = authorID;
     }
 
-    public Book create(String title, String description, BookStatus status, AuthorID authorID) {
+    public static Book create(String title, String description, AuthorID authorID) {
         final var id = BookID.unique();
         final var createdAt = Instant.now();
-        return new Book(id, title, description, status, createdAt, authorID);
+        return new Book(id, title, description, BookStatus.AVAILABLE, createdAt, authorID);
     }
 
-    public Book with(BookID id, String title, String description, BookStatus status, Instant createdAt, AuthorID authorID) {
+    public static Book with(BookID id, String title, String description, BookStatus status, Instant createdAt, AuthorID authorID) {
         return new Book(id, title, description, status, createdAt, authorID);
     }
 

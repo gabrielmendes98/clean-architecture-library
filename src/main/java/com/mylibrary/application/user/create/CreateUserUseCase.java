@@ -29,7 +29,7 @@ public class CreateUserUseCase extends UseCase<CreateUserInput, Either<Notificat
                 PersonName.from(input.name()),
                 input.document(),
                 password,
-                UserRole.CLIENT
+                UserRole.CLIENT // Passing type here because we could have another use case to create ATTENDANT role
         );
         user.validate(notification);
         password.validate(input.password(), notification);
