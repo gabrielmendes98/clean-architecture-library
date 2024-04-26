@@ -3,12 +3,12 @@ package com.mylibrary.infrastructure.author.persistence;
 import com.mylibrary.domain.author.Author;
 import com.mylibrary.domain.author.AuthorID;
 import com.mylibrary.domain.valueobjects.PersonName;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.mylibrary.infrastructure.book.persistence.BookJpaEntity;
+import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Author")
 @Table(name = "author")
@@ -22,6 +22,9 @@ public class AuthorJpaEntity {
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
+
+    @OneToMany(mappedBy = "author", orphanRemoval = true)
+    private List<BookJpaEntity> books = new ArrayList<>();
 
     public AuthorJpaEntity() {
     }
@@ -38,6 +41,18 @@ public class AuthorJpaEntity {
                 author.getName().getValue(),
                 author.getCreatedAt()
         );
+    }
+
+    public List<BookJpaEntity> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<BookJpaEntity> books) {
+        this.books = books;
+    }
+
+    public void addBook(BookJpaEntity book) {
+        this.books.add(book);
     }
 
     public Author toAuthor() {
