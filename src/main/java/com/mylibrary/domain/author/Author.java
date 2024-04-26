@@ -15,7 +15,6 @@ public class Author extends Entity<AuthorID> {
         super(id);
         this.name = name;
         this.createdAt = Objects.requireNonNull(createdAt, "'createdAt' should not be null");
-
     }
 
     public static Author create(PersonName name) {
