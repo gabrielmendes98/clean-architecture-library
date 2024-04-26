@@ -38,7 +38,7 @@ public class User extends Entity<UserID> {
 
     @Override
     public void validate(ValidationHandler handler) {
-
+        new UserValidator(this, handler).validate();
     }
 
     public PersonName getName() {

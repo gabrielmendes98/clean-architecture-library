@@ -1,6 +1,6 @@
 package com.mylibrary.domain.user;
 
-import com.mylibrary.domain.validation.Error
+import com.mylibrary.domain.validation.Error;
 import com.mylibrary.domain.validation.ValidationHandler;
 import com.mylibrary.domain.validation.Validator;
 
@@ -23,7 +23,7 @@ public class UserValidator extends Validator {
             this.validationHandler().append(new Error("'document' must have 11 characters"));
         }
 
-        if(user.getRole() == null) {
+        if (user.getRole() == null) {
             this.validationHandler().append(new Error("'role' must not be null"));
         }
     }

@@ -21,7 +21,7 @@ public class PasswordValidator extends Validator {
     public void validate() {
         final var hashedPassword = this.password.getValue();
         // Check for null password
-        if (plainPassword == null || Arrays.toString(plainPassword).trim().length() < MIN_PASSWORD_LENGTH) {
+        if (hashedPassword == null || plainPassword == null || plainPassword.length < MIN_PASSWORD_LENGTH) {
             this.validationHandler().append(new Error("'password' should has at least 8 characters"));
             return;
         }
@@ -42,7 +42,9 @@ public class PasswordValidator extends Validator {
                 hasSpecial = true;
             }
         }
-        this.validationHandler().append(new Error("'password' should has at least one uppercase letter, one lowercase letter, one digit, and one special character"));
+        if (!hasUppercase || !hasLowercase || !hasDigit || !hasSpecial) {
+            this.validationHandler().append(new Error("'password' should has at least one uppercase letter, one lowercase letter, one digit, and one special character"));
+        }
         Arrays.fill(plainPassword, ' ');
     }
 }
