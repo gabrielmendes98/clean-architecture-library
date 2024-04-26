@@ -1,6 +1,8 @@
 package com.mylibrary.infrastructure.book.persistence;
 
+import com.mylibrary.domain.author.AuthorID;
 import com.mylibrary.domain.book.Book;
+import com.mylibrary.domain.book.BookID;
 import com.mylibrary.domain.book.BookStatus;
 import com.mylibrary.infrastructure.author.persistence.AuthorJpaEntity;
 import jakarta.persistence.*;
@@ -53,6 +55,17 @@ public class BookJpaEntity {
                 book.getStatus(),
                 book.getCreatedAt(),
                 author
+        );
+    }
+
+    public Book toBook() {
+        return Book.with(
+                BookID.from(getId()),
+                getTitle(),
+                getDescription(),
+                getStatus(),
+                getCreatedAt(),
+                AuthorID.from(getAuthor().getId())
         );
     }
 
