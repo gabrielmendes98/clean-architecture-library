@@ -42,7 +42,7 @@ public class Book extends Entity<BookID> {
 
     @Override
     public void validate(ValidationHandler handler) {
-
+        new BookValidator(this, handler).validate();
     }
 
     public String getTitle() {

@@ -43,6 +43,15 @@ public class AuthorJpaEntity {
         );
     }
 
+
+    public Author toAuthor() {
+        return Author.with(
+                AuthorID.from(getId()),
+                PersonName.from(getName()),
+                getCreatedAt()
+        );
+    }
+
     public List<BookJpaEntity> getBooks() {
         return books;
     }
@@ -53,14 +62,6 @@ public class AuthorJpaEntity {
 
     public void addBook(BookJpaEntity book) {
         this.books.add(book);
-    }
-
-    public Author toAuthor() {
-        return Author.with(
-                AuthorID.from(getId()),
-                PersonName.from(getName()),
-                getCreatedAt()
-        );
     }
 
     public String getId() {
