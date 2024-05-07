@@ -19,4 +19,5 @@ public class UserPostgresGateway implements UserGateway {
     public User create(User user) {
         return userRepository.save(UserJpaEntity.from(user)).toUser();
     }
+    
 }

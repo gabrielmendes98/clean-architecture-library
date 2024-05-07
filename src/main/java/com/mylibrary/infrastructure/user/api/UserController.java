@@ -24,6 +24,6 @@ public class UserController implements UserAPI {
         if (output.isLeft()) {
             throw new NotificationException("Error creating user", output.getLeft());
         }
-        return ResponseEntity.created(URI.create("/user/" + output.get().token())).body(output.get());
+        return ResponseEntity.created(URI.create("/user/" + output.get().id())).body(output.get());
     }
 }

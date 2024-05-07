@@ -6,12 +6,17 @@ import com.mylibrary.domain.user.UserRole;
 import com.mylibrary.domain.valueobjects.PersonName;
 import com.mylibrary.domain.valueobjects.password.Password;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity(name = "User")
 @Table(name = "\"user\"")
-public class UserJpaEntity {
+public class UserJpaEntity implements UserDetails {
     @Id
     @Column(name = "id", nullable = false, length = 32)
     private String id;
@@ -32,17 +37,21 @@ public class UserJpaEntity {
     @Column(name = "role", nullable = false)
     private UserRole role;
 
+    @Column(name = "salt", nullable = false)
+    private byte[] salt;
+
 
     public UserJpaEntity() {
     }
 
-    private UserJpaEntity(String id, String name, String document, String password, UserRole role, Instant createdAt) {
+    private UserJpaEntity(String id, String name, String document, String password, UserRole role, Instant createdAt, byte[] salt) {
         this.id = id;
         this.document = document;
         this.password = password;
         this.role = role;
         this.createdAt = createdAt;
         this.name = name;
+        this.salt = salt;
     }
 
     public static UserJpaEntity from(final User user) {
@@ -52,7 +61,8 @@ public class UserJpaEntity {
                 user.getDocument(),
                 user.getPassword().getValue(),
                 user.getRole(),
-                user.getCreatedAt()
+                user.getCreatedAt(),
+                user.getPassword().getSalt()
         );
     }
 
@@ -61,10 +71,18 @@ public class UserJpaEntity {
                 UserID.from(getId()),
                 PersonName.from(getName()),
                 getDocument(),
-                Password.from(getPassword()),
+                Password.from(getPassword(), getSalt()),
                 getRole(),
                 getCreatedAt()
         );
+    }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
     }
 
     public String getId() {
@@ -99,12 +117,47 @@ public class UserJpaEntity {
         this.document = document;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        var authorities = new ArrayList<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_CLIENT"));
+        if (getRole() == UserRole.ATTENDANT) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_ATTENDANT"));
+        }
+        return authorities;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String getUsername() {
+        return getDocument();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public UserRole getRole() {

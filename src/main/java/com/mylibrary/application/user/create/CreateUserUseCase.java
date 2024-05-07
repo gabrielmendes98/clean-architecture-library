@@ -24,7 +24,7 @@ public class CreateUserUseCase extends UseCase<CreateUserInput, Either<Notificat
     @Override
     public Either<Notification, CreateUserOutput> execute(CreateUserInput input) {
         final var notification = Notification.create();
-        final var password = Password.from(input.password());
+        final var password = Password.create(input.password());
         final var user = User.create(
                 PersonName.from(input.name()),
                 input.document(),
@@ -33,11 +33,9 @@ public class CreateUserUseCase extends UseCase<CreateUserInput, Either<Notificat
         );
         user.validate(notification);
         password.validate(input.password(), notification);
-        // generate jwt token
-        var fakeToken = "fakeToken";
         return notification.hasError() ? Left(notification) :
                 Try(() -> this.userGateway.create(user))
                         .toEither()
-                        .bimap(Notification::create, u -> new CreateUserOutput(fakeToken));
+                        .bimap(Notification::create, u -> new CreateUserOutput(u.getId().getValue()));
     }
 }

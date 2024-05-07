@@ -19,14 +19,41 @@ public class Password extends ValueObject {
     private final byte[] salt;
     private final String hashedPassword;
 
-    private Password(char[] password) {
-        this.salt = generateSalt();
+    private Password(char[] password, byte[] salt) {
+        this.salt = salt;
         this.hashedPassword = hashPassword(password, this.salt);
         Arrays.fill(password, ' '); // Clear the password array after use
     }
 
-    public static Password from(final String password) {
-        return new Password(password.toCharArray());
+    private Password(String hashedPassword, byte[] salt) {
+        this.hashedPassword = hashedPassword;
+        this.salt = salt;
+    }
+
+    public static Password create(final String password) {
+        return new Password(password.toCharArray(), generateSalt());
+    }
+
+    public static Password create(final String password, final byte[] salt) {
+        return new Password(password.toCharArray(), salt);
+    }
+
+    public static Password from(final String hashedPassword, final byte[] salt) {
+        return new Password(hashedPassword, salt);
+    }
+
+    // Method to generate a random salt
+    private static byte[] generateSalt() {
+        SecureRandom random = new SecureRandom();
+        byte[] saltBytes = new byte[SALT_LENGTH];
+        random.nextBytes(saltBytes);
+        return saltBytes;
+    }
+
+    // Method to verify if a provided plain text password matches the stored hashed password
+    public static boolean verifyPassword(String plainPassword, String hashedPassword, byte[] salt) {
+        var newHashedPassword = Password.create(plainPassword, salt);
+        return newHashedPassword.getValue().equals(hashedPassword);
     }
 
     @Override
@@ -46,12 +73,8 @@ public class Password extends ValueObject {
         new PasswordValidator(this, plainPassword, handler).validate();
     }
 
-    // Method to generate a random salt
-    private byte[] generateSalt() {
-        SecureRandom random = new SecureRandom();
-        byte[] saltBytes = new byte[SALT_LENGTH];
-        random.nextBytes(saltBytes);
-        return saltBytes;
+    public byte[] getSalt() {
+        return salt;
     }
 
     // Method to hash the password using PBKDF2
@@ -65,13 +88,5 @@ public class Password extends ValueObject {
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new NoStacktraceException("Error hashing password");
         }
-    }
-
-    // Method to verify if a provided plain text password matches the stored hashed password
-    public boolean verifyPassword(String password) {
-        char[] passwordChars = password.toCharArray();
-        String hashedAttempt = hashPassword(passwordChars, this.salt);
-        Arrays.fill(passwordChars, ' '); // Clear the password array after use
-        return hashedAttempt != null && hashedAttempt.equals(this.hashedPassword);
     }
 }

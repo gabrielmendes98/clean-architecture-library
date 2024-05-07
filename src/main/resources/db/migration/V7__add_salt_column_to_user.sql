@@ -1,0 +1,5 @@
+ALTER TABLE "user"
+    ADD salt BYTEA;
+
+ALTER TABLE "user"
+    ALTER COLUMN salt SET NOT NULL;
