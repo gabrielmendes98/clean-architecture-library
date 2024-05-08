@@ -1,5 +1,7 @@
-package com.mylibrary.infrastructure.auth;
+package com.mylibrary.infrastructure.auth.api;
 
+import com.mylibrary.application.auth.authenticate.AuthenticateInput;
+import com.mylibrary.application.auth.authenticate.AuthenticateOutput;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

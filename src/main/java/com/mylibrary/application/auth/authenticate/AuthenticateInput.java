@@ -1,4 +1,4 @@
-package com.mylibrary.infrastructure.auth;
+package com.mylibrary.application.auth.authenticate;
 
 public record AuthenticateInput(
         String document,

@@ -1,5 +1,6 @@
 package com.mylibrary.infrastructure.auth;
 
+import com.mylibrary.infrastructure.auth.filters.SecurityFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

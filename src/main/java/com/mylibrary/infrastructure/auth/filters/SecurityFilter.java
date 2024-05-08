@@ -1,6 +1,8 @@
-package com.mylibrary.infrastructure.auth;
+package com.mylibrary.infrastructure.auth.filters;
 
-import com.mylibrary.infrastructure.user.persistence.UserRepository;
+import com.mylibrary.domain.auth.TokenService;
+import com.mylibrary.domain.user.UserGateway;
+import com.mylibrary.infrastructure.auth.entity.AuthenticatedUser;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,11 +19,11 @@ import java.io.IOException;
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
-    private final UserRepository userRepository;
+    private final UserGateway userGateway;
 
-    public SecurityFilter(TokenService tokenService, UserRepository userRepository) {
+    public SecurityFilter(TokenService tokenService, UserGateway userGateway) {
         this.tokenService = tokenService;
-        this.userRepository = userRepository;
+        this.userGateway = userGateway;
     }
 
     @Override
@@ -35,7 +37,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         System.out.println(token);
         if (token != null) {
             var document = tokenService.validateToken(token);
-            UserDetails user = userRepository.findByDocument(document);
+            UserDetails user = AuthenticatedUser.from(userGateway.findByDocument(document));
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

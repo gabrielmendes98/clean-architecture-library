@@ -6,17 +6,12 @@ import com.mylibrary.domain.user.UserRole;
 import com.mylibrary.domain.valueobjects.PersonName;
 import com.mylibrary.domain.valueobjects.password.Password;
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collection;
 
 @Entity(name = "User")
 @Table(name = "\"user\"")
-public class UserJpaEntity implements UserDetails {
+public class UserJpaEntity {
     @Id
     @Column(name = "id", nullable = false, length = 32)
     private String id;
@@ -81,10 +76,6 @@ public class UserJpaEntity implements UserDetails {
         return salt;
     }
 
-    public void setSalt(byte[] salt) {
-        this.salt = salt;
-    }
-
     public String getId() {
         return id;
     }
@@ -95,10 +86,6 @@ public class UserJpaEntity implements UserDetails {
 
     public Instant getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
     }
 
     public String getName() {
@@ -116,17 +103,7 @@ public class UserJpaEntity implements UserDetails {
     public void setDocument(String document) {
         this.document = document;
     }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        var authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_CLIENT"));
-        if (getRole() == UserRole.ATTENDANT) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_ATTENDANT"));
-        }
-        return authorities;
-    }
-
+    
     public String getPassword() {
         return password;
     }
@@ -135,36 +112,7 @@ public class UserJpaEntity implements UserDetails {
         this.password = password;
     }
 
-    @Override
-    public String getUsername() {
-        return getDocument();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
     public UserRole getRole() {
         return role;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
     }
 }
