@@ -35,7 +35,6 @@ public class Auth0TokenService implements TokenService {
     @Override
     public String validateToken(String token) {
         try {
-            System.out.println(token);
             Algorithm algorithm = Algorithm.HMAC256(PRIVATE_KEY);
             return JWT.require(algorithm)
                     .withIssuer(ISSUER)

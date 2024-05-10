@@ -37,16 +37,14 @@ Response:
 
 ```json
 {
-  "token": "jwt token"
+  "id": "uuidv4"
 }
 ```
 
 #### [POST] Realizar cadastro de cliente (pelo site = funcionario cadastrando alguem)
 
-URL: `/user`
+URL: `/admin/user`
 Headers: Authentication
-Obs: o endpoint eh o mesmo, a diferenca eh que aqui mandamos o token no header, e na api devemos validar se tem token e
-se o portador do token eh do tipo atendente
 Request:
 
 ```json
@@ -60,7 +58,8 @@ Response:
 
 ```json
 {
-  "password": "FN57akyScx"
+  "password": "FN57akyScx",
+  "id": "uuidv4"
 }
 ```
 

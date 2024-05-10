@@ -11,6 +11,7 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Random;
 
 public class Password extends ValueObject {
     private static final int SALT_LENGTH = 16;
@@ -56,6 +57,38 @@ public class Password extends ValueObject {
         return newHashedPassword.getValue().equals(hashedPassword);
     }
 
+    public static String generateRandomPassword() {
+        String upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
+        String digits = "0123456789";
+        String specialChars = "!@#$%^&*()-_=+";
+
+        String allChars = upperCaseLetters + lowerCaseLetters + digits + specialChars;
+
+        Random random = new SecureRandom();
+        StringBuilder passwordBuilder = new StringBuilder();
+
+        passwordBuilder.append(upperCaseLetters.charAt(random.nextInt(upperCaseLetters.length())));
+        passwordBuilder.append(lowerCaseLetters.charAt(random.nextInt(lowerCaseLetters.length())));
+        passwordBuilder.append(digits.charAt(random.nextInt(digits.length())));
+        passwordBuilder.append(specialChars.charAt(random.nextInt(specialChars.length())));
+
+        int passwordLength = PasswordValidator.MIN_PASSWORD_LENGTH;
+        while (passwordBuilder.length() < passwordLength) {
+            passwordBuilder.append(allChars.charAt(random.nextInt(allChars.length())));
+        }
+
+        char[] passwordChars = passwordBuilder.toString().toCharArray();
+        for (int i = 0; i < passwordChars.length; i++) {
+            int randomIndex = random.nextInt(passwordChars.length);
+            char temp = passwordChars[i];
+            passwordChars[i] = passwordChars[randomIndex];
+            passwordChars[randomIndex] = temp;
+        }
+
+        return new String(passwordChars);
+    }
+
     @Override
     public String getValue() {
         return hashedPassword;
@@ -89,4 +122,5 @@ public class Password extends ValueObject {
             throw new NoStacktraceException("Error hashing password");
         }
     }
+
 }

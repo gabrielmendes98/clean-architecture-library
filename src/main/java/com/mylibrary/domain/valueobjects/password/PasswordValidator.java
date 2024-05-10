@@ -7,7 +7,7 @@ import com.mylibrary.domain.validation.Validator;
 import java.util.Arrays;
 
 public class PasswordValidator extends Validator {
-    private static final int MIN_PASSWORD_LENGTH = 8;
+    public static final int MIN_PASSWORD_LENGTH = 8;
     private final Password password;
     private final char[] plainPassword;
 

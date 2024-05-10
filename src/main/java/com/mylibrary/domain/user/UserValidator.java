@@ -4,6 +4,8 @@ import com.mylibrary.domain.validation.Error;
 import com.mylibrary.domain.validation.ValidationHandler;
 import com.mylibrary.domain.validation.Validator;
 
+import java.util.stream.Stream;
+
 public class UserValidator extends Validator {
     private final User user;
 
@@ -25,6 +27,10 @@ public class UserValidator extends Validator {
 
         if (user.getRole() == null) {
             this.validationHandler().append(new Error("'role' must not be null"));
+        }
+
+        if (Stream.of(UserRole.values()).noneMatch(v -> v.name().equals(user.getRole().name()))) {
+            this.validationHandler().append(new Error("'role' must be 'CLIENT' o 'ATTENDANT'"));
         }
     }
 }
