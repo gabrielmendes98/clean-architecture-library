@@ -102,23 +102,11 @@ public class RentJpaEntity {
         return rentDate;
     }
 
-    public void setRentDate(Instant rentDate) {
-        this.rentDate = rentDate;
-    }
-
     public Instant getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(Instant returnDate) {
-        this.returnDate = returnDate;
-    }
-
     public Instant getReturnedDate() {
         return returnedDate;
-    }
-
-    public void setReturnedDate(Instant returnedDate) {
-        this.returnedDate = returnedDate;
     }
 }

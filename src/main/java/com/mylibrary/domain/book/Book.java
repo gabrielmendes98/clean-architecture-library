@@ -13,6 +13,7 @@ public class Book extends Entity<BookID> {
     private final BookStatus status;
     private final Instant createdAt;
     private final AuthorID authorID;
+    private final Instant returnDate;
 
     private Book(
             BookID bookID,
@@ -20,7 +21,7 @@ public class Book extends Entity<BookID> {
             String description,
             BookStatus status,
             Instant createdAt,
-            AuthorID authorID
+            AuthorID authorID, Instant returnDate
     ) {
         super(bookID);
         this.title = title;
@@ -28,16 +29,17 @@ public class Book extends Entity<BookID> {
         this.status = status;
         this.createdAt = Objects.requireNonNull(createdAt, "'createdAt' should not be null");
         this.authorID = authorID;
+        this.returnDate = returnDate;
     }
 
     public static Book create(String title, String description, AuthorID authorID) {
         final var id = BookID.unique();
         final var createdAt = Instant.now();
-        return new Book(id, title, description, BookStatus.AVAILABLE, createdAt, authorID);
+        return new Book(id, title, description, BookStatus.AVAILABLE, createdAt, authorID, null);
     }
 
-    public static Book with(BookID id, String title, String description, BookStatus status, Instant createdAt, AuthorID authorID) {
-        return new Book(id, title, description, status, createdAt, authorID);
+    public static Book with(BookID id, String title, String description, BookStatus status, Instant createdAt, AuthorID authorID, Instant returnDate) {
+        return new Book(id, title, description, status, createdAt, authorID, returnDate);
     }
 
     @Override
@@ -63,5 +65,9 @@ public class Book extends Entity<BookID> {
 
     public AuthorID getAuthorID() {
         return authorID;
+    }
+
+    public Instant getReturnDate() {
+        return returnDate;
     }
 }

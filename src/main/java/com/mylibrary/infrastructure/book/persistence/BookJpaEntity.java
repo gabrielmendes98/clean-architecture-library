@@ -5,9 +5,14 @@ import com.mylibrary.domain.book.Book;
 import com.mylibrary.domain.book.BookID;
 import com.mylibrary.domain.book.BookStatus;
 import com.mylibrary.infrastructure.author.persistence.AuthorJpaEntity;
+import com.mylibrary.infrastructure.rent.persistence.RentJpaEntity;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity(name = "Book")
 @Table(name = "book")
@@ -32,6 +37,9 @@ public class BookJpaEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "author_id", nullable = false)
     private AuthorJpaEntity author;
+
+    @OneToMany(mappedBy = "book", orphanRemoval = true)
+    private Set<RentJpaEntity> rent = new LinkedHashSet<>();
 
     public BookJpaEntity() {
     }
@@ -58,6 +66,39 @@ public class BookJpaEntity {
         );
     }
 
+    public Set<RentJpaEntity> getRent() {
+        return rent;
+    }
+
+    public void setRent(Set<RentJpaEntity> rent) {
+        this.rent = rent;
+    }
+
+    public RentJpaEntity getLastRent() {
+        if (this.rent == null || this.rent.isEmpty()) {
+            return null;
+        }
+
+        return Collections.max(this.rent, Comparator.comparing(RentJpaEntity::getRentDate));
+    }
+
+    public Instant getReturnDate() {
+//        if (getStatus() != BookStatus.RENTED) {
+//            return null;
+//        }
+
+        var lastRent = getLastRent();
+        if (lastRent == null) {
+            return null;
+        }
+
+        if (lastRent.getReturnDate().isBefore(Instant.now())) {
+            return null;
+        }
+
+        return lastRent.getReturnDate();
+    }
+
     public Book toBook() {
         return Book.with(
                 BookID.from(getId()),
@@ -65,7 +106,8 @@ public class BookJpaEntity {
                 getDescription(),
                 getStatus(),
                 getCreatedAt(),
-                AuthorID.from(getAuthor().getId())
+                AuthorID.from(getAuthor().getId()),
+                getReturnDate()
         );
     }
 
@@ -89,10 +131,6 @@ public class BookJpaEntity {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -105,15 +143,7 @@ public class BookJpaEntity {
         return status;
     }
 
-    public void setStatus(BookStatus status) {
-        this.status = status;
-    }
-
     public Instant getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
     }
 }
