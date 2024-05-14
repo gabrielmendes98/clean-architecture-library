@@ -50,6 +50,17 @@ public class BookPostgresGateway implements BookGateway {
         );
     }
 
+    @Override
+    public Book findById(String id) {
+        return bookRepository.findById(id).map(BookJpaEntity::toBook).orElse(null);
+    }
+
+    @Override
+    public Book update(Book book) {
+        return bookRepository.save(BookJpaEntity.from(book)).toBook();
+    }
+
+
     private Specification<BookJpaEntity> assembleSpecification(final String str) {
         final Specification<BookJpaEntity> titleLike = like("title", str);
         final Specification<BookJpaEntity> idLike = like("id", str);

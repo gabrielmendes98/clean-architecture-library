@@ -7,4 +7,8 @@ public interface BookGateway {
     Book create(Book book);
 
     Pagination<Book> findAll(SearchQuery query);
+
+    Book findById(String id);
+
+    Book update(Book book);
 }

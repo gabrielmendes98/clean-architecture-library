@@ -10,10 +10,10 @@ import java.util.Objects;
 public class Book extends Entity<BookID> {
     private final String title;
     private final String description;
-    private final BookStatus status;
     private final Instant createdAt;
     private final AuthorID authorID;
     private final Instant returnDate;
+    private BookStatus status;
 
     private Book(
             BookID bookID,
@@ -69,5 +69,9 @@ public class Book extends Entity<BookID> {
 
     public Instant getReturnDate() {
         return returnDate;
+    }
+
+    public void rentBook() {
+        this.status = BookStatus.RENTED;
     }
 }
