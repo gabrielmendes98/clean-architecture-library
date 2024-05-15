@@ -12,7 +12,7 @@ public class Book extends Entity<BookID> {
     private final String description;
     private final Instant createdAt;
     private final AuthorID authorID;
-    private final Instant returnDate;
+    private Instant returnDate;
     private BookStatus status;
 
     private Book(
@@ -71,7 +71,8 @@ public class Book extends Entity<BookID> {
         return returnDate;
     }
 
-    public void rentBook() {
+    public void rentBook(Instant returnDate) {
         this.status = BookStatus.RENTED;
+        this.returnDate = returnDate;
     }
 }

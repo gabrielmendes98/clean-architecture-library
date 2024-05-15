@@ -18,7 +18,7 @@ public class RentCreatedEventListener {
     public void onBookRent(@NonNull RentCreatedEvent event) {
         var book = this.bookGateway.findById(event.bookId());
         if (book != null) {
-            book.rentBook();
+            book.rentBook(event.returnDate());
             bookGateway.update(book);
         }
     }

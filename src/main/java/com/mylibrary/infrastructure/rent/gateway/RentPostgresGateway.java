@@ -22,7 +22,7 @@ public class RentPostgresGateway implements RentGateway {
     @Override
     public Rent create(Rent rent) {
         var createdRent = rentRepository.save(RentJpaEntity.from(rent)).toRent();
-        eventPublisher.send(new RentCreatedEvent(rent.getId().getValue(), rent.getBookID().getValue()));
+        eventPublisher.send(new RentCreatedEvent(rent.getId().getValue(), rent.getBookID().getValue(), rent.getReturnDate()));
         return createdRent;
     }
 

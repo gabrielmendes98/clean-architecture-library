@@ -1,5 +1,7 @@
 package com.mylibrary.domain.rent;
 
 
-public record RentCreatedEvent(String rentId, String bookId) {
+import java.time.Instant;
+
+public record RentCreatedEvent(String rentId, String bookId, Instant returnDate) {
 }
