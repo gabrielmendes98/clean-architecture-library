@@ -71,6 +71,10 @@ public class Book extends Entity<BookID> {
         return returnDate;
     }
 
+    public boolean isAvailable() {
+        return this.status == BookStatus.AVAILABLE;
+    }
+
     public void rentBook(Instant returnDate) {
         this.status = BookStatus.RENTED;
         this.returnDate = returnDate;

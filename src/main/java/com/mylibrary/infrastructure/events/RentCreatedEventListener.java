@@ -1,6 +1,7 @@
 package com.mylibrary.infrastructure.events;
 
 import com.mylibrary.domain.book.BookGateway;
+import com.mylibrary.domain.book.BookID;
 import com.mylibrary.domain.rent.RentCreatedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.lang.NonNull;
@@ -16,7 +17,7 @@ public class RentCreatedEventListener {
 
     @EventListener
     public void onBookRent(@NonNull RentCreatedEvent event) {
-        var book = this.bookGateway.findById(event.bookId());
+        var book = this.bookGateway.findById(BookID.from(event.bookId()));
         if (book != null) {
             book.rentBook(event.returnDate());
             bookGateway.update(book);

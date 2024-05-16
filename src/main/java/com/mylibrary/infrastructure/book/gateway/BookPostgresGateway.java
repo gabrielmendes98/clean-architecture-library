@@ -2,6 +2,7 @@ package com.mylibrary.infrastructure.book.gateway;
 
 import com.mylibrary.domain.book.Book;
 import com.mylibrary.domain.book.BookGateway;
+import com.mylibrary.domain.book.BookID;
 import com.mylibrary.domain.pagination.Pagination;
 import com.mylibrary.domain.pagination.SearchQuery;
 import com.mylibrary.infrastructure.book.persistence.BookJpaEntity;
@@ -51,8 +52,8 @@ public class BookPostgresGateway implements BookGateway {
     }
 
     @Override
-    public Book findById(String id) {
-        return bookRepository.findById(id).map(BookJpaEntity::toBook).orElse(null);
+    public Book findById(BookID id) {
+        return bookRepository.findById(id.getValue()).map(BookJpaEntity::toBook).orElse(null);
     }
 
     @Override
