@@ -1,6 +1,6 @@
 package com.mylibrary.application.rent.create;
 
-public record CreateRentInput(
+public record RentBookInput(
         String bookId,
         String userId
 ) {

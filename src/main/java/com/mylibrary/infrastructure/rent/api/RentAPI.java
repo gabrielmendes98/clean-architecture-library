@@ -1,7 +1,7 @@
 package com.mylibrary.infrastructure.rent.api;
 
-import com.mylibrary.application.rent.create.CreateRentInput;
-import com.mylibrary.application.rent.create.CreateRentOutput;
+import com.mylibrary.application.rent.create.RentBookInput;
+import com.mylibrary.application.rent.create.RentBookOutput;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -20,5 +20,5 @@ public interface RentAPI {
             @ApiResponse(responseCode = "422", description = "Validation error"),
     })
     @PostMapping
-    ResponseEntity<CreateRentOutput> rentBook(@RequestBody CreateRentInput input);
+    ResponseEntity<RentBookOutput> rentBook(@RequestBody RentBookInput input);
 }

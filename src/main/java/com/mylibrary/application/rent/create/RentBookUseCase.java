@@ -9,26 +9,26 @@ import com.mylibrary.domain.rent.RentGateway;
 import com.mylibrary.domain.user.UserID;
 import com.mylibrary.domain.validation.Error;
 
-public class CreateRentUseCase extends UseCase<CreateRentInput, CreateRentOutput> {
+public class RentBookUseCase extends UseCase<RentBookInput, RentBookOutput> {
     private final RentGateway rentGateway;
     private final BookGateway bookGateway;
 
-    public CreateRentUseCase(RentGateway rentGateway, BookGateway bookGateway) {
+    public RentBookUseCase(RentGateway rentGateway, BookGateway bookGateway) {
         this.rentGateway = rentGateway;
         this.bookGateway = bookGateway;
     }
 
     @Override
-    public CreateRentOutput execute(CreateRentInput createRentInput) {
-        var book = this.bookGateway.findById(BookID.from(createRentInput.bookId()));
+    public RentBookOutput execute(RentBookInput rentBookInput) {
+        var book = this.bookGateway.findById(BookID.from(rentBookInput.bookId()));
         if (!book.isAvailable()) {
             throw DomainException.with(new Error("Book unavailable"));
         }
         var rent = Rent.create(
-                BookID.from(createRentInput.bookId()),
-                UserID.from(createRentInput.userId())
+                BookID.from(rentBookInput.bookId()),
+                UserID.from(rentBookInput.userId())
         );
         this.rentGateway.create(rent);
-        return CreateRentOutput.from(rent);
+        return RentBookOutput.from(rent);
     }
 }

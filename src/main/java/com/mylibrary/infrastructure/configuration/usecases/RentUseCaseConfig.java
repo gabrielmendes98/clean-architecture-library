@@ -1,6 +1,6 @@
 package com.mylibrary.infrastructure.configuration.usecases;
 
-import com.mylibrary.application.rent.create.CreateRentUseCase;
+import com.mylibrary.application.rent.create.RentBookUseCase;
 import com.mylibrary.application.rent.get.GetRentUseCase;
 import com.mylibrary.domain.book.BookGateway;
 import com.mylibrary.domain.rent.RentGateway;
@@ -18,8 +18,8 @@ public class RentUseCaseConfig {
     }
 
     @Bean
-    public CreateRentUseCase createRentUseCase() {
-        return new CreateRentUseCase(rentGateway, bookGateway);
+    public RentBookUseCase rentBookUseCase() {
+        return new RentBookUseCase(rentGateway, bookGateway);
     }
 
     @Bean

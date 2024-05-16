@@ -4,7 +4,7 @@ import com.mylibrary.domain.rent.Rent;
 
 import java.time.Instant;
 
-public record CreateRentOutput(
+public record RentBookOutput(
         String rentId,
         String bookId,
         String userId,
@@ -12,8 +12,8 @@ public record CreateRentOutput(
         Instant returnDate,
         boolean wasReturned
 ) {
-    public static CreateRentOutput from(Rent rent) {
-        return new CreateRentOutput(
+    public static RentBookOutput from(Rent rent) {
+        return new RentBookOutput(
                 rent.getId().getValue(),
                 rent.getBookID().getValue(),
                 rent.getUserID().getValue(),
