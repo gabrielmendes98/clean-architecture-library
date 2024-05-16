@@ -1,5 +1,3 @@
-# Work in progress...
-
 #### [POST] Realizar login
 
 URL: `/auth`
@@ -58,8 +56,8 @@ Response:
 
 ```json
 {
-  "password": "FN57akyScx",
-  "id": "uuidv4"
+  "id": "uuidv4",
+  "password": "FN57akyScx"
 }
 ```
 
@@ -227,7 +225,7 @@ Response:
 {
   "document": "29737520009",
   "name": "Joao da Silva",
-  "type": "CLIENT | ATTENDANT",
+  "role": "CLIENT | ATTENDANT",
   "booksRentedAmount": 10,
   "currentRentedBooks": [
     {
@@ -342,13 +340,14 @@ classDiagram
         + name: string
         + document: string
         + password: string
-        + type: CLIENT | ATTENDANT
+        + role: CLIENT | ATTENDANT
         + createdAt: datetime
         - rents: Rent[]
     }
 
     class Rent {
         <<Entity>>
+        + id: string
         + bookId: string
         + userId: string
         + rentDate: datetime
