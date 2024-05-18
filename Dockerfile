@@ -7,6 +7,6 @@ COPY src ./src
 RUN ./gradlew clean build -x test
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-COPY --from=builder /app/build/libs/my-app.jar /app/my-app.jar
+COPY --from=builder /app/build/libs/*.jar /app/mylibrary.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/app/my-app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/mylibrary.jar"]
