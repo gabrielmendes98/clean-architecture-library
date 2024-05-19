@@ -14,4 +14,4 @@ api:
   security:
     token:
       secret: "213ddde21edee21"
-      expirationTime: 864_000_000
+      expirationTime: 864000000

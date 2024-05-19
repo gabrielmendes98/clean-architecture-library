@@ -38,3 +38,6 @@ out/
 
 ### Docker persist
 data
+
+### Env
+.env

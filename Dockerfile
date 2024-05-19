@@ -1,5 +1,6 @@
 FROM eclipse-temurin:17-jdk-alpine as builder
 WORKDIR /app
+ENV SPRING_PROFILES_ACTIVE=prod
 COPY gradlew ./
 COPY gradle ./gradle
 COPY build.gradle settings.gradle ./
