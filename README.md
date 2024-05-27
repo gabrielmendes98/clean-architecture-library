@@ -1,3 +1,9 @@
+# Arquitetura
+
+![aws-architecture](https://github.com/gabrielmendes98/clean-architecture-library/assets/26449308/9f206c8e-8940-4423-bbdd-ed880fa7da79)
+
+# Endpoints
+
 #### [POST] Realizar login
 
 URL: `/auth`
