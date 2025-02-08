@@ -4,7 +4,7 @@
 
 # Endpoints
 
-#### [POST] Realizar login
+#### [POST] Login
 
 URL: `/auth`
 Request:
@@ -24,7 +24,7 @@ Response:
 }
 ```
 
-#### [POST] Realizar cadastro de cliente (pelo app)
+#### [POST] Sign up customer
 
 URL: `/user`
 Request:
@@ -45,7 +45,7 @@ Response:
 }
 ```
 
-#### [POST] Realizar cadastro de cliente (pelo site = funcionario cadastrando alguem)
+#### [POST] Sign up employee
 
 URL: `/admin/user`
 Headers: Authentication
@@ -67,7 +67,7 @@ Response:
 }
 ```
 
-#### [PUT] Atualizar senha cliente
+#### [PUT] Update customer password
 
 URL: `/user`
 Headers: Authentication
@@ -84,7 +84,7 @@ Response:
 
 `200 OK`
 
-#### [GET] Buscar livros
+#### [GET] Search books
 
 URL: `/book`
 Request:
@@ -105,7 +105,7 @@ Response:
 ]
 ```
 
-#### [GET] Buscar detalhes de um livro (cliente)
+#### [GET] Search for book (client)
 
 URL: `/book/{id}`
 Request:
@@ -125,7 +125,7 @@ Response:
 }
 ```
 
-#### [GET] Buscar detalhes de um livro (atendente)
+#### [GET] Search for book (employee)
 
 URL: `/book/{id}`
 Headers: Authentication
@@ -134,7 +134,7 @@ Request:
 `/book/cedw123123`
 
 Response:
-Obs: objeto user, rentDate e returnDate vem null caso status seja AVAILABLE
+Obs: user object, rentDate and returnDate will be null when status is AVAILABLE
 
 ```json
 {
@@ -152,7 +152,7 @@ Obs: objeto user, rentDate e returnDate vem null caso status seja AVAILABLE
 }
 ```
 
-#### [POST] Realizar reserva de um livro (cliente)
+#### [POST] Rent a book (customer)
 
 URL: `/rent`
 Headers: Authentication
@@ -172,12 +172,12 @@ Response:
 }
 ```
 
-#### [POST] Realizar reserva de um livro (atendente)
+#### [POST] Rent a book (customer)
 
 URL: `/rent`
 Headers: Authentication
-Obs: o endpoint eh o mesmo, a diferenca eh que aqui mandamos o token no header, e na api devemos validar se tem token e
-se o portador do token eh do tipo atendente
+PS: The endpoint is the same, the differnce is that here we send the token on the header, and we validathe the token on the API and check if user is of employee type.
+
 Request:
 
 ```json
@@ -195,7 +195,7 @@ Response:
 }
 ```
 
-#### [GET] Visualizar meus alugueis (cliente)
+#### [GET] Check rents (customer)
 
 URL: `/rent`
 Headers: Authentication
@@ -216,11 +216,11 @@ Response:
 ]
 ```
 
-#### [GET] Visualizar detalhes de um cliente
+#### [GET] View customer details
 
 URL: `/user/{document}`
 Headers: Authentication
-Obs: so pode ser feito por um usuario do tipo atendente
+PS: Can be used just by employees
 Request:
 
 `/user/29737520009`
@@ -242,11 +242,11 @@ Response:
 }
 ```
 
-#### [POST] Resetar senha de um usuario
+#### [POST] Reset customer password
 
 URL: `/user/reset-password`
 Headers: Authentication
-Obs: so pode ser feito por um usuario do tipo atendente
+PS: Can be used just by employees
 Request:
 
 ```json
@@ -263,11 +263,11 @@ Response:
 }
 ```
 
-#### [POST] Dar baixa na devolucao de um livro
+#### [POST] Return a book to the stock
 
 URL: `/rent/return`
 Headers: Authentication
-Obs: so pode ser feito por um usuario do tipo atendente
+PS: Can be used just by employees
 Request:
 
 ```json
@@ -281,11 +281,11 @@ Response:
 
 `200 OK`
 
-#### [POST] Cadastrar livro
+#### [POST] Register a new book
 
 URL: `/book`
 Headers: Authentication
-Obs: so pode ser feito por um usuario do tipo atendente
+PS: Can be used just by employees
 Request:
 
 ```json
@@ -300,11 +300,11 @@ Response:
 
 `200 OK`
 
-#### [GET] Buscar usuarios
+#### [GET] Seach users
 
 URL: `/user`
 Headers: Authentication
-Obs: so pode ser feito por um usuario do tipo atendente
+PS: Can be used just by employees
 Request:
 
 `/user?page=0`
